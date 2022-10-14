@@ -20,18 +20,33 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.samples.crane.R
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import kotlinx.coroutines.delay
 
-private const val SplashWaitTime: Long = 2000
+private const val SplashWaitTime: Long = 5000
 
 @Composable
 fun LandingScreen(modifier: Modifier = Modifier, onTimeout: () -> Unit) {
     Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        // TODO Codelab: LaunchedEffect and rememberUpdatedState step
-        // TODO: Make LandingScreen disappear after loading data
+        // DONE Codelab: LaunchedEffect and rememberUpdatedState step
+        // DONE: Make LandingScreen disappear after loading data
+
+        // if onTimeout changes while the side-effect is in progress, there's no guarantee that the last onTimeout is
+        // called when the effect finishes. To guarantee this by capturing and updating to the new value, use the
+        // rememberUpdatedState API:
+        val currentOnTimeout by rememberUpdatedState(onTimeout)
+
+        // trigger the side effect only once during the lifecycle of this Composable
+        LaunchedEffect(true) {
+            delay(SplashWaitTime) // Simulates loading things
+            currentOnTimeout()
+        }
         Image(painterResource(id = R.drawable.ic_crane_drawer), contentDescription = null)
     }
 }

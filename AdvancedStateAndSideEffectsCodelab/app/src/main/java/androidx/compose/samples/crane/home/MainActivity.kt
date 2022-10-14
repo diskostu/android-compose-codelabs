@@ -21,7 +21,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.samples.crane.details.launchDetailsActivity
 import androidx.compose.samples.crane.ui.CraneTheme
 import androidx.core.view.WindowCompat
@@ -51,6 +51,15 @@ class MainActivity : ComponentActivity() {
 @Composable
 private fun MainScreen(onExploreItemClicked: OnExploreItemClicked) {
     Surface(color = MaterialTheme.colors.primary) {
-        CraneHome(onExploreItemClicked = onExploreItemClicked)
+
+        // on start, the landing screen is always shown
+        var showLandingScreen by remember { mutableStateOf(true) }
+        if (showLandingScreen) {
+            // if the landing screen is shown and the "onTimeout" event is fired, set the field to false, so it is
+            // never shown again
+            LandingScreen(onTimeout = { showLandingScreen = false })
+        } else {
+            CraneHome(onExploreItemClicked = onExploreItemClicked)
+        }
     }
 }
