@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.insets.statusBarsPadding
+import kotlinx.coroutines.launch
 
 typealias OnExploreItemClicked = (ExploreModel) -> Unit
 
@@ -41,6 +42,7 @@ fun CraneHome(
     modifier: Modifier = Modifier,
 ) {
     val scaffoldState = rememberScaffoldState()
+
     Scaffold(
         scaffoldState = scaffoldState,
         modifier = Modifier.statusBarsPadding(),
@@ -48,12 +50,20 @@ fun CraneHome(
             CraneDrawer()
         }
     ) { padding ->
+        val scope = rememberCoroutineScope()
         CraneHomeContent(
             modifier = modifier.padding(padding),
             onExploreItemClicked = onExploreItemClicked,
             openDrawer = {
-                // TODO Codelab: rememberCoroutineScope step - open the navigation drawer
-                // scaffoldState.drawerState.open()
+                // We cannot simply call suspend functions in it because openDrawer is not executed in the context of a
+                // coroutine.
+                // We cannot use LaunchedEffect as before because we cannot call composables in openDrawer. We're not
+                // in the Composition.
+                // Therefore, we have to use rememberCoroutineScope()
+                // DONE Codelab: rememberCoroutineScope step - open the navigation drawer
+                scope.launch {
+                    scaffoldState.drawerState.open()
+                }
             }
         )
     }
