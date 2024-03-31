@@ -111,12 +111,15 @@ fun RallyApp() {
                         }
                     )
                 }
-                composable(route = Bills.route) {
+                composable(
+                    route = Bills.route
+                ) {
                     BillsScreen()
                 }
                 composable(
                     route = SingleAccount.routeWithArgs,
-                    arguments = SingleAccount.arguments
+                    arguments = SingleAccount.arguments,
+                    deepLinks = SingleAccount.deepLinks
                 ) {
                     SingleAccountScreen(it.arguments?.getString(SingleAccount.accountTypeArg))
                 }
