@@ -58,6 +58,8 @@ import com.example.compose.rally.ui.components.RallyDivider
 import com.example.compose.rally.ui.components.formatAmount
 import java.util.Locale
 
+const val CONTENT_DESCRIPTION_OVERVIEW: String = "Overview Screen"
+
 @Composable
 fun OverviewScreen(
     onClickSeeAllAccounts: () -> Unit = {},
@@ -68,7 +70,7 @@ fun OverviewScreen(
         modifier = Modifier
             .padding(16.dp)
             .verticalScroll(rememberScrollState())
-            .semantics { contentDescription = "Overview Screen" }
+            .semantics { contentDescription = CONTENT_DESCRIPTION_OVERVIEW }
     ) {
         AlertCard()
         Spacer(Modifier.height(RallyDefaultPadding))

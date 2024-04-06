@@ -16,6 +16,7 @@
 
 package com.example.compose.rally.ui.bills
 
+import androidx.annotation.VisibleForTesting
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -28,6 +29,9 @@ import com.example.compose.rally.data.UserData
 import com.example.compose.rally.ui.components.BillRow
 import com.example.compose.rally.ui.components.StatementBody
 
+@VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+const val CD_BILLS_SCREEN = "Bills"
+
 /**
  * The Bills screen.
  */
@@ -36,7 +40,7 @@ fun BillsScreen(
     bills: List<Bill> = remember { UserData.bills }
 ) {
     StatementBody(
-        modifier = Modifier.clearAndSetSemantics { contentDescription = "Bills" },
+        modifier = Modifier.clearAndSetSemantics { contentDescription = CD_BILLS_SCREEN },
         items = bills,
         amounts = { bill -> bill.amount },
         colors = { bill -> bill.color },

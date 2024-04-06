@@ -16,6 +16,7 @@
 
 package com.example.compose.rally.ui.accounts
 
+import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.clickable
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -28,6 +29,12 @@ import com.example.compose.rally.data.UserData
 import com.example.compose.rally.ui.components.AccountRow
 import com.example.compose.rally.ui.components.StatementBody
 
+@VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+const val CD_ACCOUNTS_SCREEN = "Accounts Screen"
+@VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+const val CD_SINGLE_ACCOUNT_SCREEN = "Single Account Screen"
+
+
 /**
  * The Accounts screen.
  */
@@ -37,7 +44,7 @@ fun AccountsScreen(
 ) {
     val amountsTotal = remember { UserData.accounts.map { account -> account.balance }.sum() }
     StatementBody(
-        modifier = Modifier.semantics { contentDescription = "Accounts Screen" },
+        modifier = Modifier.semantics { contentDescription = CD_ACCOUNTS_SCREEN },
         items = UserData.accounts,
         amounts = { account -> account.balance },
         colors = { account -> account.color },
@@ -66,6 +73,7 @@ fun SingleAccountScreen(
 ) {
     val account = remember(accountType) { UserData.getAccount(accountType) }
     StatementBody(
+        modifier = Modifier.semantics { contentDescription = CD_SINGLE_ACCOUNT_SCREEN },
         items = listOf(account),
         colors = { account.color },
         amounts = { account.balance },

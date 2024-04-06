@@ -40,6 +40,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
@@ -110,10 +111,20 @@ private fun RallyTab(
             )
             .clearAndSetSemantics { contentDescription = text }
     ) {
-        Icon(imageVector = icon, contentDescription = text, tint = tabTintColor)
+        Icon(
+            imageVector = icon,
+            contentDescription = text,
+            tint = tabTintColor,
+            modifier = Modifier.testTag("icon-$text")
+        )
         if (selected) {
             Spacer(Modifier.width(12.dp))
-            Text(text.uppercase(Locale.getDefault()), color = tabTintColor)
+            Text(
+                text.lowercase(Locale.getDefault()),
+                color = tabTintColor,
+//                modifier = Modifier.testTag("selectedTab-$text")
+                modifier = Modifier.testTag("xxx")
+            )
         }
     }
 }

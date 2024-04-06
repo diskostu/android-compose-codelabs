@@ -38,6 +38,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
@@ -94,6 +95,7 @@ private fun BaseRow(
     Row(
         modifier = modifier
             .height(68.dp)
+            .testTag(title)
             .clearAndSetSemantics {
                 contentDescription =
                     "$title account ending in ${subtitle.takeLast(4)}, current balance $dollarSign$formattedAmount"
