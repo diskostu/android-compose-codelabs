@@ -16,10 +16,8 @@
 
 package com.example.compose.rally.ui.overview
 
-import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.VectorConverter
-import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateValue
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
@@ -108,7 +106,10 @@ private fun AlertCard() {
         currentTargetElevation = 8.dp
     }
 
-    // use infinite animation, so that Compose Test will understand the animation and does not wait (busy)
+    // use infinite animation, so that Compose Test will understand the animation and does not
+    // wait (busy).
+    // If we animate differently, f.e. "animateDpAsState", then Compose Test will not understand
+    // the infinite animation and eventually get a timeout while executing the test.
     val infiniteElevationAnimation = rememberInfiniteTransition(label = "alertTransition")
     val animatedElevation by infiniteElevationAnimation.animateValue(
         initialValue = 1.dp,
